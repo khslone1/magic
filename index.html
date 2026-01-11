@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-MAGI NET | 2026 서울 마법소녀 공식 포털</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Montserrat:wght@400;600;800&display=swap');
+
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-main: #e0e0e0;
+            --text-sub: #a0a0a0;
+            --stella-color: #3d8aff;
+            --sk-color: #ff5a5a;
+            --gaon-color: #9d4edd;
+            --modal-overlay: rgba(0, 0, 0, 0.85);
+            --danger-color: #c0392b;
+
+            /* Rank Gradients */
+            --rank-s-bg: linear-gradient(135deg, #8e44ad, #c0392b);
+            --rank-a-bg: linear-gradient(135deg, #2980b9, #2c3e50);
+            --rank-b-bg: linear-gradient(135deg, #27ae60, #16a085);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; }
+
+        /* Header */
+        header { background: rgba(0, 0, 0, 0.8); padding: 20px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #333; backdrop-filter: blur(10px); display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 900; color: #fff; text-transform: uppercase; letter-spacing: 2px; font-family: 'Montserrat', sans-serif; }
+        .logo span { color: var(--stella-color); }
+        .hero { text-align: center; padding: 60px 20px; background: linear-gradient(180deg, #000 0%, #121212 100%); }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 10px; font-family: 'Montserrat', sans-serif; }
+        .hero p { color: var(--text-sub); }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        
+        /* Corp Section */
+        .corp-section { margin-bottom: 80px; padding-bottom: 40px; border-bottom: 1px solid #222; }
+        .corp-header { margin-bottom: 30px; padding-bottom: 10px; border-bottom: 2px solid #333; }
+        .corp-title-row { display: flex; align-items: baseline; }
+        .corp-title { font-size: 2.5rem; font-weight: 900; margin-right: 15px; font-family: 'Montserrat', sans-serif; line-height: 1; }
+        .corp-slogan { display: block; margin-top: 5px; color: var(--text-sub); font-style: italic; font-size: 0.95rem; font-weight: 300; }
+        
+        .stella .corp-title { color: var(--stella-color); }
+        .sk .corp-title { color: var(--sk-color); }
+        .gaon .corp-title { color: var(--gaon-color); }
+
+        /* Card Grid */
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; margin-bottom: 40px; }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #333;
+            cursor: pointer;
+            position: relative;
+        }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.5); border-color: #555; }
+        .card-img-container { width: 100%; height: 320px; overflow: hidden; background-color: #000; }
+        .card-img {
+            width: 100%; height: 100%; object-fit: cover; object-position: top;
+            filter: grayscale(100%); 
+            transition: filter 0.4s ease, transform 0.4s ease;
+        }
+        .card:hover .card-img { filter: grayscale(0%); transform: scale(1.05); }
+
+        /* Card Body */
+        .card-body { padding: 20px; text-align: center; }
+        
+        .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+        .name { font-size: 1.3rem; font-weight: 700; }
+        .age { font-size: 0.8rem; color: #666; }
+        
+        /* Rank Badges */
+        .rank-badge { padding: 3px 8px; border-radius: 4px; font-weight: 900; font-size: 0.8rem; font-family: 'Montserrat', sans-serif; letter-spacing: -0.5px; }
+        .rank-S { background: var(--rank-s-bg); color: #fff; border: 1px solid #9b59b6; box-shadow: 0 0 10px rgba(142, 68, 173, 0.4); }
+        .rank-A { background: var(--rank-a-bg); color: #fff; border: 1px solid #3498db; }
+        .rank-B { background: var(--rank-b-bg); color: #fff; border: 1px solid #2ecc71; }
+
+        /* Role Badge */
+        .role-badge { 
+            display: inline-block; font-size: 0.7rem; font-weight: bold; letter-spacing: 1px; 
+            margin-bottom: 10px; text-transform: uppercase; padding: 2px 8px; border-radius: 20px;
+        }
+        .role-mg { background: rgba(255, 105, 180, 0.15); color: #ff69b4; border: 1px solid #ff69b4; } 
+        .role-tr { background: rgba(61, 138, 255, 0.15); color: #3d8aff; border: 1px solid #3d8aff; }
+        .role-mgr { background: rgba(157, 78, 221, 0.15); color: #9d4edd; border: 1px solid #9d4edd; }
+
+        .marketing-tag {
+            font-size: 0.95rem; color: #fff; margin-bottom: 15px; font-weight: 300;
+            height: 2.8em; display: flex; align-items: center; justify-content: center;
+            line-height: 1.4; word-break: keep-all;
+        }
+
+        .social-stats {
+            display: flex; justify-content: center; gap: 15px; padding-top: 15px; border-top: 1px solid #333;
+            font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: #888;
+        }
+        .stat-item { display: flex; align-items: center; gap: 4px; }
+        .stat-val { color: #ccc; font-weight: bold; }
+
+        /* NPC Styling */
+        .staff-header { font-size: 1.1rem; color: var(--text-sub); margin-bottom: 15px; border-left: 3px solid #444; padding-left: 10px; font-weight: bold; }
+        .npc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; }
+        .npc-card { background-color: #1a1a1a; border-radius: 8px; overflow: hidden; border: 1px solid #333; text-align: center; }
+        .npc-card .card-img-container { height: 200px; }
+        .npc-card .card-body { padding: 10px; }
+        .npc-card .name { font-size: 1rem; display: block; }
+        .npc-card .job { font-size: 0.8rem; color: #888; background: #222; padding: 2px 6px; border-radius: 4px; }
+        .npc-card .card-img { filter: grayscale(100%); transition: filter 0.4s; }
+        .npc-card:hover .card-img { filter: grayscale(0%); }
+
+        /* VOID SECTION */
+        .void-section {
+            margin-top: 80px;
+            border: 1px solid #444;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #151515;
+            position: relative;
+        }
+        .void-header {
+            background-color: var(--danger-color);
+            color: #fff;
+            padding: 15px 25px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: 1px;
+        }
+        .void-body {
+            display: flex;
+            padding: 30px;
+            gap: 30px;
+            flex-direction: row;
+        }
+        .void-img {
+            width: 300px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #333;
+            filter: contrast(1.2);
+        }
+        .void-content h3 { font-size: 1.5rem; margin-bottom: 10px; color: #fff; }
+        .void-content p { color: #aaa; margin-bottom: 15px; font-size: 0.95rem; }
+        .void-warning {
+            color: #e74c3c;
+            font-weight: bold;
+            border: 1px solid #e74c3c;
+            padding: 10px;
+            border-radius: 4px;
+            background: rgba(231, 76, 60, 0.1);
+            display: inline-block;
+        }
+
+        @media (max-width: 768px) {
+            .void-body { flex-direction: column; }
+            .void-img { width: 100%; height: auto; }
+        }
+
+        /* Modal Styles */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: var(--modal-overlay); align-items: center; justify-content: center; backdrop-filter: blur(5px); opacity: 0; transition: opacity 0.3s ease; }
+        .modal.show { display: flex; opacity: 1; }
+        .modal-content { background-color: #1a1a1a; width: 90%; max-width: 800px; border-radius: 15px; border: 1px solid #444; display: flex; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.8); position: relative; flex-direction: row; }
+        .modal-img-box { width: 40%; background: #000; }
+        .modal-img { width: 100%; height: 100%; object-fit: cover; }
+        .modal-info { padding: 40px; width: 60%; overflow-y: auto; max-height: 80vh; }
+        .modal-close { position: absolute; top: 20px; right: 20px; font-size: 2rem; cursor: pointer; color: #fff; z-index: 10; }
+        
+        .m-name { font-size: 2.5rem; font-weight: 900; margin-bottom: 5px; line-height: 1; }
+        .m-meta { color: var(--text-sub); margin-bottom: 10px; font-size: 1rem; font-family: 'Montserrat', sans-serif;}
+        .m-body-stats { color: #888; font-size: 0.9rem; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid #333; font-family: 'Montserrat', sans-serif; display: flex; gap: 15px; }
+        .m-body-stats span { background: #2a2a2a; padding: 2px 8px; border-radius: 4px; }
+
+        .m-section { margin-bottom: 25px; }
+        .m-label { color: #888; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; display: block; font-weight: bold; border-bottom: 1px solid #333; padding-bottom: 3px; }
+        .m-text { font-size: 1rem; color: #ddd; line-height: 1.7; }
+        
+        .m-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+        
+        /* Stylized Tags */
+        .battle-style-tag { 
+            background: linear-gradient(90deg, #444, #333); 
+            color: #fff; padding: 6px 12px; border-radius: 6px; 
+            font-size: 0.85rem; border: 1px solid #555; 
+            font-weight: 600; font-family: 'Montserrat', sans-serif;
+        }
+        .m-tag { 
+            background: rgba(255,255,255,0.05); 
+            color: #ccc; 
+            padding: 6px 12px; 
+            border-radius: 6px; 
+            font-size: 0.85rem; 
+            font-family: 'Montserrat', sans-serif; 
+            font-weight: 500;
+            border: 1px solid #444;
+            letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 768px) {
+            .modal-content { flex-direction: column; height: 90vh; }
+            .modal-img-box { width: 100%; height: 250px; }
+            .modal-info { width: 100%; padding: 20px; }
+        }
+
+        footer { text-align: center; padding: 40px; border-top: 1px solid #333; color: #666; font-size: 0.8rem; background-color: #0a0a0a; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">K-MAGI <span>NET</span></div>
+        <div style="font-size: 0.9rem; color: #888;">2026 OFFICIAL ARCHIVE</div>
+    </header>
+
+    <div class="hero">
+        <h1>SEOUL 2026</h1>
+        <p>대한민국 공식 마법소녀 & 트레이서 통합 네트워크</p>
+    </div>
+
+    <div class="container">
+
+        <section class="corp-section stella">
+            <div class="corp-header">
+                <div class="corp-title-row">
+                    <div class="corp-title">STELLA</div>
+                </div>
+                <span class="corp-slogan">"가장 완벽한 빛, 당신의 오늘을 디자인합니다."</span>
+            </div>
+            
+            <div class="card-grid">
+                <div class="card" onclick="openModal('eun')">
+                    <div class="card-img-container"><img src="https://raw.githubusercontent.com/khslone1/npc/main/eun.png" class="card-img"></div>
+                    <div class="card-body">
+                        <div class="card-top">
+                            <span class="name">은하린 <small class="age">(21)</small></span>
+                            <span class="rank-badge rank-A">A-</span>
+                        </div>
+                        <span class="role-badge role-mg">Magical Girl</span>
+                        <div class="marketing-tag">"광화문의 완벽한 지휘자,<br>오차 없는 승리를 약속합니다."</div>
+                        <div class="social-stats">
+                            <div class="stat-item"><span class="stat-icon">👤</span><span class="stat-val">945K</span></div>
+                            <div class="stat-item"><span class="stat-icon">❤️</span><span class="stat-val">812K</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" onclick="openModal('kang')">
+                    <div class="card-img-container"><img src="https://raw.githubusercontent.com/khslone1/npc/main/kang.png" class="card-img"></div>
+                    <div class="card-body">
+                        <div class="card-top">
+                            <span class="name">강은결 <small class="age">(21)</small></span>
+                            <span class="rank-badge rank-B">B+</span>
+                        </div>
+                        <span class="role-badge role-mg">Magical Girl</span>
+                        <div class="marketing-tag">"도시를 가르는 푸른 섬광.<br>무심한 듯 날카로운 검격."</div>
+                        <div class="social-stats">
+                            <div class="stat-item"><span class="stat-icon">👤</span><span class="stat-val">280K</span></div>
+                            <div class="stat-item"><span class="stat-icon">❤️</span><span class="stat-val">420K</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" onclick="openModal('chae')">
+                    <div class="card-img-container"><img src="https://raw.githubusercontent.com/khslone1/npc/main/chae.png" class="card-img"></div>
+                    <div class="card-body">
+                        <div class="card-top">
+                            <span class="name">채연화 <small class="age">(20)</small></span>
+                            <span class="rank-badge rank-B">B+</span>
+                        </div>
+                        <span class="role-badge role-mg">Magical Girl</span>
+                        <div class="marketing-tag">"피어나는 혼돈의 새싹.<br>당신이 지켜주고 싶은 소녀."</div>
+                        <div class="social-stats">
+                            <div class="stat-item"><span class="stat-icon">👤</span><span class="stat-val">410K</span></div>
+                            <div class="stat-item"><span class="stat-icon">❤️</span><span class="stat-val">320K</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" onclick="openModal('jin')">
+                    <div class="card-img-container"><img src="https://raw.githubusercontent.com/khslone1/npc/main/jin.png" class="card-img"></div>
+                    <div class="card-body">
+                        <div class="card-top">
+                            <span class="name">진서우 <small class="age">(28)</small></span>
+                            <span class="rank-badge rank-S">S</span>
+                        </div>
+                        <span class="role-badge role-mgr">Manager & Tracer</span>
+                        <div class="marketing-tag">"스텔라의 든든한 방패.<br>현장의 모든 것을 책임집니다."</div>
+                        <div class="social-stats">
+                            <div class="stat-item"><span class="stat-icon">👤</span><span class="stat-val">3.1M</span></div>
+                            <div class="stat-item"><span class="stat-icon">❤️</span><span class="stat-val">2.8M</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="staff-header">OPERATIONS SUPPORT</div>
+            <div class="npc-grid">
+                <div class="npc-card"><div class="card-img-container"><img src="https://raw.githubusercontent.com/khslone1/npc/main/yun.png" class="card-img"></div><div class="card-body"><span class="name">윤서희</span><span class="job">사무원</span></div></div>
+            </div>
+        </section>
+
+        <section class="corp-section sk">
+            <div class="corp-header">
+                <div class="corp-title-row">
+                    <div class="corp-title">SK</div>
+                </div>
+                <span class="corp-slogan">"한계를 넘어선 혁신, 세상을 바꾸는 힘."</span>
+            </div>
+            
+            <div class="card-grid">
+                <div class="card" onclick="openModal('baek')">
+                    <div class="card-img-container"><img src="https://raw.githubusercontent.com/khslone1/npc/main/back.png" class="card-img"></div>
+                    <div class="card-body">
+                        <div class="card-top">
+                            <span class="name">백설아 <small class="age">(23)</small></span>
+                            <span class="rank-badge rank-A">A+</span>
+                        </div>
+                        <span class="role-badge role-mg">Magical Girl</span>
+                        <div class="marketing-tag">"여의도의 하얀 저격수.<br>고고하고 완벽한 비행."</div>
+                        <div class="social-stats">
+                            <div class="stat-item"><span class="stat-icon">👤</span><span class="stat-val">720K</span></div>
+                            <div class="stat-item"><span class="stat-icon">❤️</span><span class="stat-val">550K</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" onclick="openModal('seo')">
+                    <div class="card-img-container"><img src="https://raw.githubusercontent.com/khslone1/npc/main/seo.png" class="card-img"></div>
+                    <div class="card-body">
+                        <div class="card-top">
+                            <span class="name">서아윤 <small class="age">(22)</small></span>
+                            <span class="rank-badge rank-A">A-</span>
+                        </div>
+                        <span class="role-badge role-mg">Magical Girl</span>
+                        <div class="marketing-tag">"트렌디한 사신(死神) 등장!<br>지금 가장 핫한 마법소녀."</div>
+                        <div class="social-stats">
+                            <div class="stat-item"><span class="stat-icon">👤</span><span class="stat-val">1.2M</span></div>
+                            <div class="stat-item"><span class="stat-icon">❤️</span><span class="stat-val">980K</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" onclick="openModal('kang_do')">
+                    <div class="card-img-container"><img src="https://raw.githubusercontent.com/khslone1/npc/main/gang.png" class="card-img"></div>
+                    <div class="card-body">
+                        <div class="card-top">
+                            <span class="name">강도윤 <small class="age">(21)</small></span>
+                            <span class="rank-badge rank-S">S-</span>
+                        </div>
+                        <span class="role-badge role-tr">Tracer</span>
+                        <div class="marketing-tag">"폭발하는 화염의 카리스마.<br>압도적인 액션 퍼포먼스."</div>
+                        <div class="social-stats">
+                            <div class="stat-item"><span class="stat-icon">👤</span><span class="stat-val">1.8M</span></div>
+                            <div class="stat-item"><span class="stat-icon">❤️</span><span class="stat-val">1.5M</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="staff-header">OPERATIONS SUPPORT</div>
+            <div class="npc-grid">
+                <div class="npc-card"><div class="card-img-container"><img src="https://raw.githubusercontent.com/khslone1/npc/main/choi.png" class="card-img"></div><div class="card-body"><span class="name">최준영</span><span class="job">매니저</span></div></div>
+                <div class="npc-card"><div class="card-img-container"><img src="https://raw.githubusercontent.com/khslone1/npc/main/im.png" class="card-img"></div><div class="card-body"><span class="name">임채원</span><span class="job">사무원</span></div></div>
+            </div>
+        </section>
+
+        <section class="corp-section gaon">
+            <div class="corp-header">
+                <div class="corp-title-row">
+                    <div class="corp-title">GAON</div>
+                </div>
+                <span class="corp-slogan">"침묵 속에서 피어나는 진실된 힘."</span>
+            </div>
+            
+            <div class="card-grid">
+                <div class="card" onclick="openModal('kwon')">
+                    <div class="card-img-container"><img src="https://raw.githubusercontent.com/khslone1/npc/main/kweon.png" class="card-img"></div>
+                    <div class="card-body">
+                        <div class="card-top">
+                            <span class="name">권이령 <small class="age">(21)</small></span>
+                            <span class="rank-badge rank-S">S</span>
+                        </div>
+                        <span class="role-badge role-mg">Magical Girl</span>
+                        <div class="marketing-tag">"강남을 지배하는 보랏빛 여제.<br>치명적인 매력의 S급."</div>
+                        <div class="social-stats">
+                            <div class="stat-item"><span class="stat-icon">👤</span><span class="stat-val">1.5M</span></div>
+                            <div class="stat-item"><span class="stat-icon">❤️</span><span class="stat-val">1.2M</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" onclick="openModal('chun')">
+                    <div class="card-img-container"><img src="https://raw.githubusercontent.com/khslone1/npc/main/chun.png" class="card-img"></div>
+                    <div class="card-body">
+                        <div class="card-top">
+                            <span class="name">천소희 <small class="age">(24)</small></span>
+                            <span class="rank-badge rank-B">B+</span>
+                        </div>
+                        <span class="role-badge role-mg">Magical Girl</span>
+                        <div class="marketing-tag">"보호본능을 자극하는 소녀.<br>그녀의 성장을 지켜봐 주세요."</div>
+                        <div class="social-stats">
+                            <div class="stat-item"><span class="stat-icon">👤</span><span class="stat-val">190K</span></div>
+                            <div class="stat-item"><span class="stat-icon">❤️</span><span class="stat-val">245K</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" onclick="openModal('ryu')">
+                    <div class="card-img-container"><img src="https://raw.githubusercontent.com/khslone1/npc/main/ryu.png" class="card-img"></div>
+                    <div class="card-body">
+                        <div class="card-top">
+                            <span class="name">류태환 <small class="age">(23)</small></span>
+                            <span class="rank-badge rank-A">A+</span>
+                        </div>
+                        <span class="role-badge role-tr">Tracer</span>
+                        <div class="marketing-tag">"조용하지만 확실한 서포터.<br>당신이 필요할 때 곁에 있습니다."</div>
+                        <div class="social-stats">
+                            <div class="stat-item"><span class="stat-icon">👤</span><span class="stat-val">780K</span></div>
+                            <div class="stat-item"><span class="stat-icon">❤️</span><span class="stat-val">670K</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="staff-header">OPERATIONS SUPPORT</div>
+            <div class="npc-grid">
+                <div class="npc-card"><div class="card-img-container"><img src="https://raw.githubusercontent.com/khslone1/npc/main/hun.png" class="card-img"></div><div class="card-body"><span class="name">강태훈</span><span class="job">매니저</span></div></div>
+                 <div class="npc-card"><div class="card-img-container"><img src="https://raw.githubusercontent.com/khslone1/npc/main/hyeob.png" class="card-img"></div><div class="card-body"><span class="name">서도협</span><span class="job">CEO</span></div></div>
+            </div>
+        </section>
+
+        <section class="void-section">
+            <div class="void-header">⚠️ WARNING: VOID PHENOMENON DETECTED</div>
+            <div class="void-body">
+                <img src="https://raw.githubusercontent.com/khslone1/npc/main/enemy.png" class="void-img" alt="Void Phenomenon">
+                <div class="void-content">
+                    <h3>'공백(VOID)' 발생 시 행동 요령</h3>
+                    <p>
+                        <strong>정체:</strong> 사회적으로 소외되거나 누락된 데이터, 잊힌 장소 등 '정상 규격'에서 이탈한 지점에서 발생하는 현실 침식 현상입니다.
+                        물리 법칙을 무시하고 공간을 뒤틀며 확장되는 검붉은 오염을 특징으로 합니다.
+                    </p>
+                    <p>
+                        메인 개체를 소탕하면 침식이 멈추며, 정화 과정에서 <strong>'에테르 코어'</strong>라는 고농도 에너지 결정체가 생성됩니다. 
+                        이는 현대 과학을 초월한 자원이나, 일반인에게는 치명적일 수 있습니다.
+                    </p>
+                    <div class="void-warning">
+                        ※ 공백 발생 지역을 목격할 경우 절대 접근하지 마시고, 즉시 안전한 곳으로 대피 후 당국(K-MAGI NET)에 신고하십시오.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <div id="profileModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <div class="modal-img-box">
+                <img id="m-img" src="" alt="" class="modal-img">
+            </div>
+            <div class="modal-info">
+                <h2 id="m-name" class="m-name">이름</h2>
+                <div id="m-meta" class="m-meta">나이 / 소속 / 등급</div>
+                
+                <div id="m-body-stats" class="m-body-stats">
+                    </div>
+
+                <div class="m-section">
+                    <div id="m-tags" class="m-tags"></div>
+                </div>
+
+                <div class="m-section">
+                    <span class="m-label">Personality</span>
+                    <p id="m-desc" class="m-text">성격 설명</p>
+                </div>
+
+                <div class="m-section">
+                    <span class="m-label">Ability & Battle Style</span>
+                    <p id="m-ability" class="m-text">능력 설명</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const charDB = {
+            'eun': {
+                name: "은하린", age: "21세", corp: "Stella Group", rank: "A- / Magical Girl",
+                img: "https://raw.githubusercontent.com/khslone1/npc/main/eun.png",
+                mbti: "ENTJ-A · 8w9 sp/so",
+                battleStyle: "영역 지배형 메이지",
+                stats: { h: "154cm", w: "44kg", c: "A cup" },
+                desc: "매사 철두철미한 원칙주의자이자 스텔라의 리더입니다. 냉철하고 완벽을 추구하는 모습 때문에 다가가기 어렵다는 평도 있지만, 위기 상황에서 그 누구보다 확실하게 팀을 이끄는 카리스마를 보여줍니다.",
+                ability: "<b>[질서의 격전]</b><br>하얀 스태프를 지면에 꽂아 금빛 기하학 마법진을 생성, 영역 내 모든 법칙을 본인에게 유리하게 재편합니다."
+            },
+            'kang': {
+                name: "강은결", age: "21세", corp: "Stella Group", rank: "B+ / Magical Girl",
+                img: "https://raw.githubusercontent.com/khslone1/npc/main/kang.png",
+                mbti: "INTP-T · 5w4 sp/sx",
+                battleStyle: "지연 타격형 트릭스터",
+                stats: { h: "158cm", w: "45kg", c: "A cup" },
+                desc: "무심한 표정 뒤에 비상한 두뇌를 숨기고 있는 자유로운 영혼입니다. 겉보기엔 타인에게 관심 없어 보이지만, 결정적인 순간 보이지 않는 곳에서 동료를 챙기는 반전 매력의 소유자입니다.",
+                ability: "<b>[지연 폭발]</b><br>카타나를 사용해 푸른 검기를 방출합니다. 검기가 지나간 곳에 푸른 잔상을 남겨, 납도 시 일제히 폭발시킵니다."
+            },
+            'chae': {
+                name: "채연화", age: "20세", corp: "Stella Group", rank: "B+ / Magical Girl",
+                img: "https://raw.githubusercontent.com/khslone1/npc/main/chae.png",
+                mbti: "ISFJ-T · 6w7 sp/so",
+                battleStyle: "광역 군중 제어(CC)",
+                stats: { h: "157cm", w: "50kg", c: "C cup" },
+                desc: "보호 본능을 자극하는 여린 외모의 소유자이지만, 시민을 지키겠다는 의지만큼은 누구보다 강합니다. 평소에는 수줍음이 많지만 전투에서는 놀라운 집중력을 발휘하는 성장형 마법소녀입니다.",
+                ability: "<b>[그림자 구속]</b><br>검은 스태프를 통해 혼돈 에너지를 방출합니다. 에너지를 늪처럼 만들어 상대의 움직임을 봉쇄합니다."
+            },
+            'jin': {
+                name: "진서우", age: "28세", corp: "Stella Group", rank: "S / Manager & Tracer",
+                img: "https://raw.githubusercontent.com/khslone1/npc/main/jin.png",
+                mbti: "ENFJ-A · 2w1 so/sp",
+                battleStyle: "초광역 섬멸 및 전장 지휘",
+                stats: { h: "187cm", w: "87kg", c: null },
+                desc: "스텔라의 든든한 방패이자 정신적 지주입니다. 부드럽고 온화한 리더십으로 팀을 관리하지만, 적에게는 가차 없는 뇌격을 내리꽂는 압도적인 무력을 겸비하고 있습니다.",
+                ability: "<b>[정적의 뇌우]</b><br>보라빛 전기를 방출하며 신체를 강화합니다. 특정 공간을 전기장으로 분리해 소리를 차단하고 상대 신경계를 직접 공격합니다."
+            },
+            'baek': {
+                name: "백설아", age: "23세", corp: "SK Group", rank: "A+ / Magical Girl",
+                img: "https://raw.githubusercontent.com/khslone1/npc/main/back.png",
+                mbti: "ISTJ-T · 6w5 sp/so",
+                battleStyle: "원거리 저격 및 교란",
+                stats: { h: "150cm", w: "42kg", c: "A cup" },
+                desc: "감정을 좀처럼 드러내지 않는 시크한 성격의 소유자입니다. 어떤 상황에서도 흔들리지 않는 침착함과 책임감으로 임무를 완수하며, '여의도의 하얀 저격수'라는 명성을 얻었습니다.",
+                ability: "<b>[은신하는 잔상]</b><br>빛나는 하얀 마법 활과 마법 화살을 사용합니다. 빛을 굴절시켜 여러 개의 가짜 잔상을 생성하여 적을 교란합니다."
+            },
+            'seo': {
+                name: "서아윤", age: "22세", corp: "SK Group", rank: "A- / Magical Girl",
+                img: "https://raw.githubusercontent.com/khslone1/npc/main/seo.png",
+                mbti: "ESFP-A · 7w8 sx/so",
+                battleStyle: "공간 도약형 암살자",
+                stats: { h: "156cm", w: "45kg", c: "A cup" },
+                desc: "전장을 무대처럼 즐기는 톡톡 튀는 매력의 갸루 마법소녀입니다. 특유의 밝은 에너지와 화려한 퍼포먼스로 팬들의 사랑을 한 몸에 받고 있는 SK의 트렌드 세터입니다.",
+                ability: "<b>[그림자 도약]</b><br>검은 데스사이드(낫)에서 검기를 방출합니다. 그림자가 있는 곳으로 공간을 접어 즉시 이동할 수 있습니다."
+            },
+            'kang_do': {
+                name: "강도윤", age: "21세", corp: "SK Group", rank: "S- / Tracer",
+                img: "https://raw.githubusercontent.com/khslone1/npc/main/gang.png",
+                mbti: "ESTP-A · 7w8 sx/so",
+                battleStyle: "화력 집중형 결투가",
+                stats: { h: "185cm", w: "86kg", c: null },
+                desc: "자신감 넘치는 태도와 화끈한 전투 스타일이 트레이드 마크입니다. 언제나 전장의 최전선에서 화려한 불꽃을 터뜨리며 적을 압도하는, 천상 전투광입니다.",
+                ability: "<b>[홍련의 무대]</b><br>강력한 화염 에너지를 방출합니다. 화염 기둥을 여러 개 세워 상대를 가두고 강제 결투장을 생성합니다."
+            },
+            'kwon': {
+                name: "권이령", age: "21세", corp: "Gaon Group", rank: "S / Magical Girl",
+                img: "https://raw.githubusercontent.com/khslone1/npc/main/kweon.png",
+                mbti: "INTJ-T · 5w4 sx/sp",
+                battleStyle: "공간 파괴형 디버퍼",
+                stats: { h: "151cm", w: "41kg", c: "AA cup" },
+                desc: "가온 그룹의 신비주의를 대표하는 인물로, 좀처럼 대중 앞에 모습을 드러내지 않습니다. 차가운 눈빛과 압도적인 분위기만으로 좌중을 압도하는 강남의 여제입니다.",
+                ability: "<b>[붕괴의 시선]</b><br>검보라빛 고농도 혼돈 에너지를 방출합니다. 시선이 닿는 지점의 공간을 뒤틀어 물리적 균열을 발생시킵니다."
+            },
+            'chun': {
+                name: "천소희", age: "24세", corp: "Gaon Group", rank: "B+ / Magical Girl",
+                img: "https://raw.githubusercontent.com/khslone1/npc/main/chun.png",
+                mbti: "INFP-T · 4w5 sx/sp",
+                battleStyle: "은신 기습형 로그",
+                stats: { h: "162cm", w: "53kg", c: "D cup" },
+                desc: "엉뚱하고 4차원적인 매력을 지닌 소녀입니다. 때로는 서툴러 보이지만, 중요한 순간에는 예상치 못한 기지를 발휘합니다. 시민들은 그녀의 성장을 응원하고 있습니다.",
+                ability: "<b>[유리 파편]</b><br>단검을 소환하여 방출합니다. 소환한 단검을 투명화하여 적이 알아차리지 못하게 기습합니다."
+            },
+            'ryu': {
+                name: "류태환", age: "23세", corp: "Gaon Group", rank: "A+ / Tracer",
+                img: "https://raw.githubusercontent.com/khslone1/npc/main/ryu.png",
+                mbti: "INFJ-T · 4w3 sp/so",
+                battleStyle: "절대 방어 및 염동력 서포터",
+                stats: { h: "189cm", w: "90kg", c: null },
+                desc: "조용히 뒤에서 팀을 지탱하는 그림자 같은 조력자입니다. 묵묵히 자신의 할 일을 수행하며 동료들의 안전을 책임지는, 가온의 믿음직한 서포터입니다.",
+                ability: "<b>[푸른 방울]</b><br>푸른 에너지를 방출하며 염력을 사용합니다. 대상을 푸른 막으로 감싸 공격을 하지도, 받지도 못하게 무력화합니다."
+            }
+        };
+
+        const modal = document.getElementById('profileModal');
+        
+        function openModal(charId) {
+            const data = charDB[charId];
+            if(!data) return;
+
+            document.getElementById('m-img').src = data.img;
+            document.getElementById('m-name').innerText = data.name;
+            document.getElementById('m-meta').innerText = `${data.age} | ${data.corp} | ${data.rank}`;
+            
+            // Body Stats Injection
+            const statsContainer = document.getElementById('m-body-stats');
+            let statsHtml = `<span>${data.stats.h}</span><span>${data.stats.w}</span>`;
+            if (data.stats.c) {
+                statsHtml += `<span>${data.stats.c}</span>`;
+            }
+            statsContainer.innerHTML = statsHtml;
+
+            document.getElementById('m-desc').innerText = data.desc;
+            document.getElementById('m-ability').innerHTML = data.ability;
+            
+            const tagContainer = document.getElementById('m-tags');
+            tagContainer.innerHTML = ''; 
+            
+            // Battle Style Tag
+            const styleSpan = document.createElement('span');
+            styleSpan.className = 'battle-style-tag';
+            styleSpan.innerText = `⚔️ ${data.battleStyle}`;
+            tagContainer.appendChild(styleSpan);
+
+            // MBTI Tag
+            const mbtiSpan = document.createElement('span');
+            mbtiSpan.className = 'm-tag';
+            mbtiSpan.innerText = data.mbti;
+            tagContainer.appendChild(mbtiSpan);
+
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden'; 
+        }
+
+        function closeModal() {
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
