@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>K-MAGI NET | 2026 서울 마법소녀 공식 포털</title>
     <script src="https://w.soundcloud.com/player/api.js"></script>
 
@@ -26,7 +26,7 @@
             --rank-b-bg: linear-gradient(135deg, #27ae60, #16a085);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         body { 
             font-family: 'Noto Sans KR', sans-serif; 
             background-color: var(--bg-color); 
@@ -57,22 +57,24 @@
             text-align: center;
             animation: pulse 2s infinite ease-in-out;
             padding: 20px;
+            width: 100%;
         }
 
         .landing-logo {
             font-family: 'Montserrat', sans-serif;
             font-weight: 900;
-            font-size: 3rem; /* 모바일 대응 전 기본값 */
+            font-size: 3rem;
             color: #fff;
-            margin-bottom: 20px;
-            letter-spacing: 4px;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+            line-height: 1.1;
         }
 
         .landing-logo span { color: var(--stella-color); }
 
         .landing-text {
             font-family: 'Montserrat', sans-serif;
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: #888;
             letter-spacing: 2px;
             text-transform: uppercase;
@@ -80,13 +82,14 @@
 
         .landing-click {
             margin-top: 40px;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: #fff;
             border: 1px solid rgba(255,255,255,0.3);
             padding: 10px 20px;
             border-radius: 30px;
             background: rgba(255,255,255,0.05);
             transition: all 0.3s;
+            display: inline-block;
         }
 
         @keyframes pulse {
@@ -127,30 +130,30 @@
         }
 
         /* Header */
-        header { background: rgba(0, 0, 0, 0.8); padding: 20px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #333; backdrop-filter: blur(10px); display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.5rem; font-weight: 900; color: #fff; text-transform: uppercase; letter-spacing: 2px; font-family: 'Montserrat', sans-serif; }
+        header { background: rgba(0, 0, 0, 0.85); padding: 15px 20px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #333; backdrop-filter: blur(10px); display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.2rem; font-weight: 900; color: #fff; text-transform: uppercase; letter-spacing: 1px; font-family: 'Montserrat', sans-serif; }
         .logo span { color: var(--stella-color); }
         
-        .hero { text-align: center; padding: 60px 20px; background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, rgba(18,18,18,0) 100%); }
-        .hero h1 { font-size: 2.5rem; margin-bottom: 10px; font-family: 'Montserrat', sans-serif; }
-        .hero p { color: var(--text-sub); }
+        .hero { text-align: center; padding: 50px 20px; background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, rgba(18,18,18,0) 100%); }
+        .hero h1 { font-size: 2.2rem; margin-bottom: 10px; font-family: 'Montserrat', sans-serif; letter-spacing: -1px; }
+        .hero p { color: var(--text-sub); font-size: 0.9rem; word-break: keep-all; }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
         
         /* Corp Section */
-        .corp-section { margin-bottom: 80px; padding-bottom: 40px; border-bottom: 1px solid #222; }
+        .corp-section { margin-bottom: 60px; padding-bottom: 30px; border-bottom: 1px solid #222; }
         .corp-section:last-child { border-bottom: none; }
-        .corp-header { margin-bottom: 30px; padding-bottom: 10px; border-bottom: 2px solid #333; }
+        .corp-header { margin-bottom: 25px; padding-bottom: 10px; border-bottom: 2px solid #333; }
         .corp-title-row { display: flex; align-items: baseline; flex-wrap: wrap; }
-        .corp-title { font-size: 2.5rem; font-weight: 900; margin-right: 15px; font-family: 'Montserrat', sans-serif; line-height: 1; }
-        .corp-slogan { display: block; margin-top: 5px; color: var(--text-sub); font-style: italic; font-size: 0.95rem; font-weight: 300; }
+        .corp-title { font-size: 2.2rem; font-weight: 900; margin-right: 15px; font-family: 'Montserrat', sans-serif; line-height: 1; }
+        .corp-slogan { display: block; margin-top: 5px; color: var(--text-sub); font-style: italic; font-size: 0.9rem; font-weight: 300; word-break: keep-all;}
         
         .stella .corp-title { color: var(--stella-color); }
         .sk .corp-title { color: var(--sk-color); }
         .gaon .corp-title { color: var(--gaon-color); }
 
         /* Card Grid */
-        .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; margin-bottom: 40px; }
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; margin-bottom: 40px; }
 
         .card {
             background-color: var(--card-bg);
@@ -174,7 +177,7 @@
         .card-body { padding: 20px; text-align: center; }
         
         .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
-        .name { font-size: 1.3rem; font-weight: 700; }
+        .name { font-size: 1.2rem; font-weight: 700; }
         .age { font-size: 0.8rem; color: #666; }
         
         /* Rank Badges */
@@ -193,8 +196,8 @@
         .role-mgr { background: rgba(157, 78, 221, 0.15); color: #9d4edd; border: 1px solid #9d4edd; }
 
         .marketing-tag {
-            font-size: 0.95rem; color: #fff; margin-bottom: 15px; font-weight: 300;
-            height: 2.8em; display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem; color: #fff; margin-bottom: 15px; font-weight: 300;
+            height: 3em; display: flex; align-items: center; justify-content: center;
             line-height: 1.4; word-break: keep-all;
         }
 
@@ -206,19 +209,19 @@
         .stat-val { color: #ccc; font-weight: bold; }
 
         /* NPC Styling */
-        .staff-header { font-size: 1.1rem; color: var(--text-sub); margin-bottom: 15px; border-left: 3px solid #444; padding-left: 10px; font-weight: bold; }
-        .npc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; }
+        .staff-header { font-size: 1rem; color: var(--text-sub); margin-bottom: 15px; border-left: 3px solid #444; padding-left: 10px; font-weight: bold; }
+        .npc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; }
         .npc-card { background-color: #1a1a1a; border-radius: 8px; overflow: hidden; border: 1px solid #333; text-align: center; }
-        .npc-card .card-img-container { height: 200px; }
+        .npc-card .card-img-container { height: 160px; }
         .npc-card .card-body { padding: 10px; }
-        .npc-card .name { font-size: 1rem; display: block; }
-        .npc-card .job { font-size: 0.8rem; color: #888; background: #222; padding: 2px 6px; border-radius: 4px; }
+        .npc-card .name { font-size: 0.9rem; display: block; }
+        .npc-card .job { font-size: 0.7rem; color: #888; background: #222; padding: 2px 6px; border-radius: 4px; }
         .npc-card .card-img { filter: grayscale(100%); transition: filter 0.4s; }
         .npc-card:hover .card-img { filter: grayscale(0%); }
 
         /* VOID SECTION */
         .void-section {
-            margin-top: 80px;
+            margin-top: 60px;
             border: 1px solid #444;
             border-radius: 12px;
             overflow: hidden;
@@ -228,10 +231,10 @@
         .void-header {
             background-color: var(--danger-color);
             color: #fff;
-            padding: 15px 25px;
+            padding: 15px 20px;
             font-family: 'Montserrat', sans-serif;
             font-weight: 900;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -252,8 +255,8 @@
             filter: contrast(1.2);
             flex-shrink: 0;
         }
-        .void-content h3 { font-size: 1.5rem; margin-bottom: 10px; color: #fff; }
-        .void-content p { color: #aaa; margin-bottom: 15px; font-size: 0.95rem; }
+        .void-content h3 { font-size: 1.3rem; margin-bottom: 10px; color: #fff; }
+        .void-content p { color: #aaa; margin-bottom: 15px; font-size: 0.9rem; word-break: keep-all; }
         .void-warning {
             color: #e74c3c;
             font-weight: bold;
@@ -262,6 +265,8 @@
             border-radius: 4px;
             background: rgba(231, 76, 60, 0.1);
             display: inline-block;
+            font-size: 0.9rem;
+            word-break: keep-all;
         }
 
         /* BGM Player (Hidden) */
@@ -283,22 +288,22 @@
         .modal-img-box { width: 40%; background: #000; }
         .modal-img { width: 100%; height: 100%; object-fit: cover; }
         .modal-info { padding: 40px; width: 60%; overflow-y: auto; max-height: 80vh; }
-        .modal-close { position: absolute; top: 20px; right: 20px; font-size: 2rem; cursor: pointer; color: #fff; z-index: 10; }
+        .modal-close { position: absolute; top: 20px; right: 20px; font-size: 2rem; cursor: pointer; color: #fff; z-index: 10; background: rgba(0,0,0,0.5); border-radius: 50%; width: 40px; height: 40px; text-align: center; line-height: 35px;}
         
-        .m-name { font-size: 2.5rem; font-weight: 900; margin-bottom: 5px; line-height: 1; }
-        .m-meta { color: var(--text-sub); margin-bottom: 10px; font-size: 1rem; font-family: 'Montserrat', sans-serif;}
-        .m-body-stats { color: #888; font-size: 0.9rem; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid #333; font-family: 'Montserrat', sans-serif; display: flex; gap: 15px; }
+        .m-name { font-size: 2.2rem; font-weight: 900; margin-bottom: 5px; line-height: 1; }
+        .m-meta { color: var(--text-sub); margin-bottom: 10px; font-size: 0.9rem; font-family: 'Montserrat', sans-serif;}
+        .m-body-stats { color: #888; font-size: 0.85rem; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #333; font-family: 'Montserrat', sans-serif; display: flex; gap: 10px; flex-wrap: wrap; }
         .m-body-stats span { background: #2a2a2a; padding: 2px 8px; border-radius: 4px; }
 
-        .m-section { margin-bottom: 25px; }
-        .m-label { color: #888; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; display: block; font-weight: bold; border-bottom: 1px solid #333; padding-bottom: 3px; }
-        .m-text { font-size: 1rem; color: #ddd; line-height: 1.7; }
+        .m-section { margin-bottom: 20px; }
+        .m-label { color: #888; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; display: block; font-weight: bold; border-bottom: 1px solid #333; padding-bottom: 3px; }
+        .m-text { font-size: 0.95rem; color: #ddd; line-height: 1.7; word-break: keep-all; }
         .m-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
         
         .battle-style-tag { 
             background: linear-gradient(90deg, #444, #333); 
             color: #fff; padding: 6px 12px; border-radius: 6px; 
-            font-size: 0.85rem; border: 1px solid #555; 
+            font-size: 0.8rem; border: 1px solid #555; 
             font-weight: 600; font-family: 'Montserrat', sans-serif;
         }
         .m-tag { 
@@ -306,55 +311,42 @@
             color: #ccc; 
             padding: 6px 12px; 
             border-radius: 6px; 
-            font-size: 0.85rem; 
+            font-size: 0.8rem; 
             font-family: 'Montserrat', sans-serif; 
             font-weight: 500;
             border: 1px solid #444;
             letter-spacing: 0.5px;
         }
 
-        /* --- [MOBILE RESPONSIVE STYLES] --- */
+        /* --- [MOBILE OPTIMIZATION] --- */
         @media (max-width: 768px) {
-            /* General Typography Sizing */
-            .landing-logo { font-size: 2.2rem; }
-            .hero h1 { font-size: 2rem; }
-            .corp-title { font-size: 2rem; }
+            .landing-logo { font-size: 1.8rem; }
+            .hero { padding: 40px 15px; }
+            .hero h1 { font-size: 1.8rem; }
+            .container { padding: 15px; }
+
+            /* Corp Header Center Align */
+            .corp-header { text-align: center; }
+            .corp-title-row { justify-content: center; }
+            .corp-title { margin-right: 0; font-size: 1.8rem; }
             
-            /* Card Grid: 1 Column on Mobile */
-            .card-grid {
-                grid-template-columns: 1fr;
-                gap: 30px;
-                padding: 0 10px;
-            }
+            /* Card Grid: 1 Column */
+            .card-grid { grid-template-columns: 1fr; gap: 30px; }
+            .card-img-container { height: 280px; }
 
-            /* Void Section: Vertical Stack */
-            .void-body {
-                flex-direction: column;
-                padding: 20px;
-            }
-            .void-img {
-                width: 100%;
-                height: 200px;
-                margin-bottom: 20px;
-            }
+            /* NPC Grid Smaller */
+            .npc-grid { grid-template-columns: repeat(2, 1fr); }
 
-            /* Modal: Full Screen Vertical */
-            .modal-content {
-                flex-direction: column;
-                width: 95%;
-                height: 90vh;
-                max-height: 90vh;
-            }
-            .modal-img-box {
-                width: 100%;
-                height: 250px;
-                flex-shrink: 0;
-            }
-            .modal-info {
-                width: 100%;
-                padding: 20px;
-            }
-            .m-name { font-size: 2rem; }
+            /* Void Section Stack */
+            .void-body { flex-direction: column; padding: 20px; }
+            .void-img { width: 100%; height: 180px; margin-bottom: 15px; }
+
+            /* Modal Full Screen */
+            .modal-content { flex-direction: column; width: 90%; height: 85vh; max-height: 85vh; }
+            .modal-img-box { width: 100%; height: 200px; flex-shrink: 0; }
+            .modal-info { width: 100%; padding: 20px; overflow-y: scroll;}
+            .m-name { font-size: 1.8rem; }
+            .modal-close { top: 10px; right: 10px; }
         }
 
         footer { text-align: center; padding: 40px; border-top: 1px solid #333; color: #666; font-size: 0.8rem; background-color: #0a0a0a; }
@@ -374,7 +366,7 @@
 
     <header>
         <div class="logo">K-MAGI <span>NET</span></div>
-        <div style="font-size: 0.9rem; color: #888;">2026 OFFICIAL ARCHIVE</div>
+        <div style="font-size: 0.8rem; color: #888;">2026 OFFICIAL ARCHIVE</div>
     </header>
 
     <div class="hero">
