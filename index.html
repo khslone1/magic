@@ -334,16 +334,23 @@
             .card-grid { grid-template-columns: 1fr; gap: 30px; }
             .card-img-container { height: 280px; }
 
+            /* --- [이미지 잘림 해결 핵심 코드] --- */
+            /* 모바일에서 이미지를 자르지 않고 비율대로 다 보여줍니다 (여백 발생 가능) */
+            .card-img { object-fit: contain; object-position: center; }
+            /* -------------------------------- */
+
             /* NPC Grid Smaller */
             .npc-grid { grid-template-columns: repeat(2, 1fr); }
+            .npc-card .card-img { object-fit: cover; } /* NPC는 꽉 차게 유지 */
 
             /* Void Section Stack */
             .void-body { flex-direction: column; padding: 20px; }
-            .void-img { width: 100%; height: 180px; margin-bottom: 15px; }
+            .void-img { width: 100%; height: auto; max-height: 250px; object-fit: contain; margin-bottom: 15px; background: #000;}
 
             /* Modal Full Screen */
             .modal-content { flex-direction: column; width: 90%; height: 85vh; max-height: 85vh; }
-            .modal-img-box { width: 100%; height: 200px; flex-shrink: 0; }
+            .modal-img-box { width: 100%; height: 250px; flex-shrink: 0; }
+            .modal-img { object-fit: contain; background: #000; } /* 모달 이미지도 잘리지 않게 */
             .modal-info { width: 100%; padding: 20px; overflow-y: scroll;}
             .m-name { font-size: 1.8rem; }
             .modal-close { top: 10px; right: 10px; }
@@ -716,7 +723,7 @@
                 battleStyle: "공간 파괴형 디버퍼",
                 stats: { h: "151cm", w: "41kg", c: "AA cup" },
                 desc: "가온 그룹의 신비주의를 대표하는 인물로, 좀처럼 대중 앞에 모습을 드러내지 않습니다. 차가운 눈빛과 압도적인 분위기만으로 좌중을 압도하는 강남의 여제입니다.",
-                ability: "<b>[붕괴의 시선]</b><br>검보라빛 고농도 혼돈 에너지를 방출합니다. 시선이 닿는 지점의 공간을 뒤틀어 물리적 균열을 발생시킵니다."
+                ability: "<b>[붕괴의 시선]</b><br>검보라빛 고농도 혼돈 에너지를 방출합니다. 시선이닿는 지점의 공간을 뒤틀어 물리적 균열을 발생시킵니다."
             },
             'chun': {
                 name: "천소희", age: "24세", corp: "Gaon Group", rank: "B+ / Magical Girl",
