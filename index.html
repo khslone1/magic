@@ -33,10 +33,10 @@
             color: var(--text-main); 
             line-height: 1.6; 
             position: relative;
-            overflow-x: hidden; /* 인트로 시 스크롤 방지 */
+            overflow-x: hidden;
         }
 
-        /* --- [NEW] Intro Landing Screen --- */
+        /* --- Intro Landing Screen --- */
         #landing-screen {
             position: fixed;
             top: 0;
@@ -56,12 +56,13 @@
         .landing-content {
             text-align: center;
             animation: pulse 2s infinite ease-in-out;
+            padding: 20px;
         }
 
         .landing-logo {
             font-family: 'Montserrat', sans-serif;
             font-weight: 900;
-            font-size: 3rem;
+            font-size: 3rem; /* 모바일 대응 전 기본값 */
             color: #fff;
             margin-bottom: 20px;
             letter-spacing: 4px;
@@ -88,19 +89,13 @@
             transition: all 0.3s;
         }
 
-        .landing-click:hover {
-            background: rgba(255,255,255,0.2);
-            border-color: #fff;
-        }
-
         @keyframes pulse {
             0% { opacity: 0.6; transform: scale(0.98); }
             50% { opacity: 1; transform: scale(1.02); text-shadow: 0 0 20px rgba(61, 138, 255, 0.5); }
             100% { opacity: 0.6; transform: scale(0.98); }
         }
-        /* ---------------------------------- */
 
-        /* --- Star Background Animation --- */
+        /* --- Star Background --- */
         #star-container {
             position: fixed;
             top: 0;
@@ -135,6 +130,7 @@
         header { background: rgba(0, 0, 0, 0.8); padding: 20px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #333; backdrop-filter: blur(10px); display: flex; justify-content: space-between; align-items: center; }
         .logo { font-size: 1.5rem; font-weight: 900; color: #fff; text-transform: uppercase; letter-spacing: 2px; font-family: 'Montserrat', sans-serif; }
         .logo span { color: var(--stella-color); }
+        
         .hero { text-align: center; padding: 60px 20px; background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, rgba(18,18,18,0) 100%); }
         .hero h1 { font-size: 2.5rem; margin-bottom: 10px; font-family: 'Montserrat', sans-serif; }
         .hero p { color: var(--text-sub); }
@@ -145,7 +141,7 @@
         .corp-section { margin-bottom: 80px; padding-bottom: 40px; border-bottom: 1px solid #222; }
         .corp-section:last-child { border-bottom: none; }
         .corp-header { margin-bottom: 30px; padding-bottom: 10px; border-bottom: 2px solid #333; }
-        .corp-title-row { display: flex; align-items: baseline; }
+        .corp-title-row { display: flex; align-items: baseline; flex-wrap: wrap; }
         .corp-title { font-size: 2.5rem; font-weight: 900; margin-right: 15px; font-family: 'Montserrat', sans-serif; line-height: 1; }
         .corp-slogan { display: block; margin-top: 5px; color: var(--text-sub); font-style: italic; font-size: 0.95rem; font-weight: 300; }
         
@@ -254,6 +250,7 @@
             border-radius: 8px;
             border: 1px solid #333;
             filter: contrast(1.2);
+            flex-shrink: 0;
         }
         .void-content h3 { font-size: 1.5rem; margin-bottom: 10px; color: #fff; }
         .void-content p { color: #aaa; margin-bottom: 15px; font-size: 0.95rem; }
@@ -279,11 +276,6 @@
             z-index: -100;
         }
 
-        @media (max-width: 768px) {
-            .void-body { flex-direction: column; }
-            .void-img { width: 100%; height: auto; }
-        }
-
         /* Modal Styles */
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: var(--modal-overlay); align-items: center; justify-content: center; backdrop-filter: blur(5px); opacity: 0; transition: opacity 0.3s ease; }
         .modal.show { display: flex; opacity: 1; }
@@ -301,10 +293,8 @@
         .m-section { margin-bottom: 25px; }
         .m-label { color: #888; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; display: block; font-weight: bold; border-bottom: 1px solid #333; padding-bottom: 3px; }
         .m-text { font-size: 1rem; color: #ddd; line-height: 1.7; }
-        
         .m-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
         
-        /* Stylized Tags */
         .battle-style-tag { 
             background: linear-gradient(90deg, #444, #333); 
             color: #fff; padding: 6px 12px; border-radius: 6px; 
@@ -323,10 +313,48 @@
             letter-spacing: 0.5px;
         }
 
+        /* --- [MOBILE RESPONSIVE STYLES] --- */
         @media (max-width: 768px) {
-            .modal-content { flex-direction: column; height: 90vh; }
-            .modal-img-box { width: 100%; height: 250px; }
-            .modal-info { width: 100%; padding: 20px; }
+            /* General Typography Sizing */
+            .landing-logo { font-size: 2.2rem; }
+            .hero h1 { font-size: 2rem; }
+            .corp-title { font-size: 2rem; }
+            
+            /* Card Grid: 1 Column on Mobile */
+            .card-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 0 10px;
+            }
+
+            /* Void Section: Vertical Stack */
+            .void-body {
+                flex-direction: column;
+                padding: 20px;
+            }
+            .void-img {
+                width: 100%;
+                height: 200px;
+                margin-bottom: 20px;
+            }
+
+            /* Modal: Full Screen Vertical */
+            .modal-content {
+                flex-direction: column;
+                width: 95%;
+                height: 90vh;
+                max-height: 90vh;
+            }
+            .modal-img-box {
+                width: 100%;
+                height: 250px;
+                flex-shrink: 0;
+            }
+            .modal-info {
+                width: 100%;
+                padding: 20px;
+            }
+            .m-name { font-size: 2rem; }
         }
 
         footer { text-align: center; padding: 40px; border-top: 1px solid #333; color: #666; font-size: 0.8rem; background-color: #0a0a0a; }
